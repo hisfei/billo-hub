@@ -1,0 +1,32 @@
+debug_mode: true
+http: 127.0.0.1:8080
+dsn: 
+jwt_key: "a_very_secure_and_randomly_generated_key_for_billo_hub_!@#$%"
+enable_shell_skill: yes
+cors_allowed_origins:
+  - "http://localhost:8081"
+  - "http://127.0.0.1:8081"
+wepostx_api_baseURL: "http://127.0.0.1:8088/v1" # The internet surfing service
+log_path: ./logs/app.log
+log_conf:
+  debug_model: true
+  level: -1 # Debug Level
+  app_name: "billo-hub"
+
+  json_log:
+    enable: true
+    path: "logs/app_json"
+    file:
+      max_size: 10
+      max_age: 7
+      max_backups: 10
+      compress: true
+
+#  csv_log:
+#    enable: false
+#    path: "logs/app_csv"# 指向网上冲浪服务
+#    file:
+#      max_size: 10
+#      max_age: 7
+#      max_backups: 10
+#      compress: true

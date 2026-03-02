@@ -1,0 +1,25 @@
+
+debug_model: true
+level: -1 # Debug Level
+app_name: "my-app"
+
+json_log:
+  enable: true
+  path: "logs/app_json" # 会生成 logs/app_json.info.log 等
+  file:
+    max_size: 10
+    max_age: 7
+    max_backups: 10
+    compress: true
+
+csv_log:
+  enable: true
+  path: "logs/app_csv" # 会生成 logs/app_csv.info.log 等
+  file:
+    max_size: 10
+    max_age: 7
+    max_backups: 10
+    compress: true
+
+gorm_option:
+# ...

@@ -1,0 +1,15 @@
+.PHONY:  all init fmt tidy dep  build-mac build-linux build-windows
+
+export GO111MODULE=on
+all: init fmt tidy dep build-mac build-linux build-windows
+
+fmt:
+	go fmt ./...
+build-linux: fmt
+	GOOS=linux  GOARCH=amd64 go build  -trimpath  -ldflags "-w -s" -o bin/billo-hub ./cmd
+build-win:fmt
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build  -trimpath  -ldflags "-w -s" -o bin/billo-hub ./cmd
+tidy:
+	go mod tidy
+init:
+	go mod init

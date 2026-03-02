@@ -13,10 +13,12 @@ import (
 	middleware "billohub/pkg/middleware"
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -99,7 +101,17 @@ func main() {
 
 	// 注册核心 API 路由
 	api.RegisterRoutes(ginEngine, cfg.DebugMode, hub, logger)
-
+	ginEngine.Static("/web", "./web")
+	ginEngine.NoRoute(func(c *gin.Context) {
+		// 检查请求路径是否以 /web/ 开头
+		if c.Request.URL.Path[:5] == "/web/" {
+			// 返回 index.html 文件
+			c.File("./web/index.html")
+			return
+		}
+		// 对于其他所有未匹配的路由，可以返回标准的404页面
+		c.JSON(http.StatusNotFound, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+	})
 	logger.Info("Starting, listen on " + cfg.Http)
 
 	gw := gateway.NewGateway(cfg.Http, ginEngine, logger)

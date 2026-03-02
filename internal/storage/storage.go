@@ -4,8 +4,9 @@ import (
 	"billohub/pkg/helper"
 	"strings"
 
+	"github.com/glebarez/sqlite"
 	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
+
 	"gorm.io/gorm"
 )
 
@@ -22,7 +23,7 @@ func NewStorage(dsn string) (*Storage, error) {
 		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	} else {
 		if dsn == "" {
-			dsn = "my.db"
+			dsn = "hub.db"
 		}
 		db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	}

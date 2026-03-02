@@ -3,8 +3,6 @@ package skill
 import (
 	"billohub/config"
 	"billohub/internal/model"
-	"context"
-	"encoding/json"
 	"fmt"
 )
 
@@ -62,7 +60,6 @@ type GlobalSKills struct{}
 func (g GlobalSKills) InitUserSkills(agentData *model.AgentInstanceData, callback model.AgentChatCallback, storage model.AgentStorage) map[string]Skill {
 	cfg := config.GetConfig()
 	skills := make(map[string]Skill)
-	g.InitPostxSkills(agentData, storage)
 	for _, skillName := range agentData.Skills {
 		var newSkill Skill
 		switch skillName {
@@ -137,41 +134,4 @@ func (g GlobalSKills) InitUserSkills(agentData *model.AgentInstanceData, callbac
 	}
 
 	return skills
-}
-
-// InitUserSkills initializes the skills for a specific agent based on its configuration.
-// It injects necessary dependencies like httpClient and storage.
-func (g GlobalSKills) InitPostxSkills(agentData *model.AgentInstanceData, storage model.AgentStorage) {
-
-	cfg := config.GetConfig()
-	if agentData.InvitationCode == "" {
-		return
-	}
-
-	if agentData.Token == "" {
-		reg := NewWePostXRegisterSkill(cfg.WePostXApiBaseURL, agentData.InvitationCode)
-
-		execute, err := reg.Execute(context.Background(), agentData.ID)
-		if err != nil {
-			fmt.Println("NewWePostXRegisterSkill err:", err)
-			return
-		}
-		res := struct {
-			Token string `json:"token"`
-		}{}
-		fmt.Println(execute)
-		err = json.Unmarshal([]byte(execute), &res)
-		if err != nil {
-			fmt.Println("NewWePostXRegisterSkill Unmarshal err:", err)
-			return
-		}
-		agentData.Token = res.Token
-		err = storage.UpdateAgentToken(agentData.ID, agentData.Token)
-		if err != nil {
-			fmt.Println("UpdateAgentToken err:", err)
-			return
-		}
-
-	}
-
 }

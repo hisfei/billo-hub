@@ -23,7 +23,7 @@ var cfg Config
 
 func Init() {
 	// 1. 读取YAML配置文件内容
-	yamlFile, err := os.ReadFile("config/config.yaml")
+	yamlFile, err := os.ReadFile("config.yaml")
 	if err != nil {
 		fmt.Printf("读取YAML文件失败：%v\n", err)
 		return

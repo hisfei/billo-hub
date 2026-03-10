@@ -43,40 +43,40 @@ build-mac-amd64:
 	@echo ">>> Building macOS amd64..."
 	mkdir -p releases/darwin-amd64
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -trimpath -ldflags "-w -s" -o releases/darwin-amd64/billo-hub ./cmd
-	cp config/config.yaml releases/darwin-amd64/
+	cp config.yaml releases/darwin-amd64/
 	cp -r releases/web releases/darwin-amd64/
 
 build-mac-arm64:
 	@echo ">>> Building macOS arm64..."
 	mkdir -p releases/darwin-arm64
 	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -trimpath -ldflags "-w -s" -o releases/darwin-arm64/billo-hub ./cmd
-	cp config/config.yaml releases/darwin-arm64/
+	cp config.yaml releases/darwin-arm64/
 	cp -r releases/web releases/darwin-arm64/
 
 build-linux-amd64:
 	@echo ">>> Building linux amd64..."
 	mkdir -p releases/linux-amd64
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags "-w -s" -o releases/linux-amd64/billo-hub ./cmd
-	cp config/config.yaml releases/linux-amd64/
+	cp config.yaml releases/linux-amd64/
 	cp -r releases/web releases/linux-amd64/
 
 build-linux-arm64:
 	@echo ">>> Building linux arm64..."
 	mkdir -p releases/linux-arm64
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags "-w -s" -o releases/linux-arm64/billo-hub ./cmd
-	cp config/config.yaml releases/linux-arm64/
+	cp config.yaml releases/linux-arm64/
 	cp -r releases/web releases/linux-arm64/
 
 build-windows-amd64:
 	@echo ">>> Building windows amd64..."
 	mkdir -p releases/windows-amd64
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -ldflags "-w -s" -o releases/windows-amd64/billo-hub.exe ./cmd
-	cp config/config.yaml releases/windows-amd64/
+	cp config.yaml releases/windows-amd64/
 	cp -r releases/web releases/windows-amd64/
 
 build-windows-arm64:
 	@echo ">>> Building windows arm64..."
 	mkdir -p releases/windows-arm64
 	CGO_ENABLED=0 GOOS=windows GOARCH=arm64 go build -trimpath -ldflags "-w -s" -o releases/windows-arm64/billo-hub.exe ./cmd
-	cp config/config.yaml releases/windows-arm64/
+	cp config.yaml releases/windows-arm64/
 	cp -r releases/web releases/windows-arm64/

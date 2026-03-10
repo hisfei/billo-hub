@@ -45,8 +45,7 @@
                     v-model="editTitle"
                     ref="titleInput"
                     class="title-edit-input"
-                    @blur="confirmEditTitle"
-                    @keyup.enter="confirmEditTitle"
+                     @keyup.enter="confirmEditTitle"
                     @keyup.esc="cancelEditTitle"
                 >
                 <div v-else class="history-text" :title="item.title">
@@ -145,15 +144,21 @@ export default {
       });
     },
     confirmEditTitle() {
+     const newTitle = this.editTitle.trim();
       if (!this.editingId || !this.editTitle.trim()) {
         this.cancelEditTitle();
         return;
       }
-      const target = this.historyList.find(item => item.id === this.editingId);
-      if (target) {
-        target.title = this.editTitle.trim();
-        this.$emit('update-chat-title', this.editingId, this.editTitle.trim());
-      }
+      const index = this.historyList.findIndex(item => item.id === this.editingId);
+             if (index !== -1) {
+               this.historyList[index].name = newTitle;
+               this.historyList[index].title = newTitle;
+
+               // ✅ 关键修复：让 Vue 强制刷新列表
+               this.historyList = [...this.historyList];
+             }
+
+      this.$emit('update-chat-title', this.editingId, this.editTitle.trim());
       this.editingId = null;
     },
     cancelEditTitle() {
